@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Assistant Dashboard</title>
+
+    <link rel="shortcut icon" href="/home/nadahamed/webAPP/www/assets/img/car.ico" type="image/x-icon">
+
+    <!---BOOTSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--BOOTSTRAP ICONS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Particle js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+        type="text/javascript"></script>
+
+    <!--TEXLLATE--->
+    <link rel="stylesheet" href="assets/vendore/texllate/animate.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <section id="Oval" class="mb-4" >
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+
+                    <canvas id="canvasOne" width="700" height="420" style="position: absolute;"></canvas>
+
+                    <div id="siri">
+
+                        <div class="square">
+                            <span class="circle"></span>
+                            <span class="circle"></span>
+                            <span class="circle"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <h5 class="text-light text text-center">Say hello nova to wake me up or press mic button </h5>
+                <!---CHATBOX(en ydakhl text 3shan chatting)-->
+                <div class="col-md-12 mt-4 pt-4">
+                    <div class="text-center">
+                        <div id="TextInput" class="d-flex">
+                            <button id="MicBtn" class="glow-on-hover"><i class="bi bi-mic"></i></button>
+                            <button id="GpsBtn" class="glow-on-hover"><i class="bi bi-geo-alt"></i></button>
+                            <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear"></i></button>
+                            <button id="InstructionsBtn" class="glow-on-hover"><i class="bi bi-info-circle"></i></button>
+                            
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Window (Initially hidden) -->
+                <div id="SettingsWindow" class="card text-center p-2" style="width: 200px;position:absolute ; top: 60%; right: 17%; z-index: 999; background-color: #250b1fb0; border: 1px solid #e339c7ea; display: none;">
+                    <div class="card-body">
+                        <button id="MonitorOnBtn" class="btn btn-sm btn-outline-light m-1" title="Monitor On"><i class="bi bi-shield-check"></i></button>
+                        <button id="MonitorOffBtn" class="btn btn-sm btn-outline-light m-1" title="Monitor Off"><i class="bi bi-shield-x"></i></button>
+                        <br>
+                        <button class="btn btn-sm btn-danger mt-2" id="CloseSettings">Close</button>
+                        
+
+                    </div>
+                </div>
+                <!-- Instructions Window (Initially hidden) -->
+                <!-- Instructions Window (Fixed at Top Left, Opaque, Scrollable) -->
+                <div id="InstructionsWindow" class="card text-left p-3" style="width: 320px; height: 400px; position: absolute; top: 20px; right: 20px; z-index: 1000; background-color: #111; color: white; border: 2px solid #5bc0de; display: none; overflow-y: auto; border-radius: 10px;">
+                    <h5 style="color: #3399ff;">System Overview:</h5>
+                    <ul style="padding-left: 20px; font-size: 14px;">
+                        <li>🛻 After turning on your car engine, Nova automatically enters <b>Monitoring Mode</b>.</li>
+                        <li>🧠 In Monitoring Mode, Nova continuously checks your:
+                            <ul>
+                                <li>Driver Activity</li>
+                                <li>Fatigue and Drowsiness</li>
+                                <li>Distraction and Sleepiness</li>
+                                <li>Hands on the Steering Wheel</li>
+                            </ul>
+                            and gives you live safety feedback and driving suggestions.
+                        </li>
+                        <li>🛑 To <b>Disable Monitoring</b>:
+                            <ul>
+                                <li>Say "<b>Disable Monitoring</b>".</li>
+                                <li>Or open <b>Settings</b> and press the <b>Disable</b> button.</li>
+                            </ul>
+                        </li>
+                        <li>🟢 To <b>Enable Monitoring</b> again:
+                            <ul>
+                                <li>Say "<b>Enable Monitoring</b>".</li>
+                                <li>Or open <b>Settings</b> and press the <b>Enable</b> button.</li>
+                            </ul>
+                        </li>
+                        <li>🎙️ To talk to Nova:
+                            <ul>
+                                <li>Say the wake-up word "<b>Hey Nova</b>" or "<b>Hello Nova</b>".</li>
+                                <li>Or press the <b>Mic Button</b> manually.</li>
+                            </ul>
+                        </li>
+                        <li>⏳ Nova will terminate the listening session if you do not respond within <b>1 minute</b>.</li>
+                        <li>🗺️ Press the <b>GPS Button</b> to locate your current position on Google Maps.</li>
+                        <li>💬 You can ask Nova about anything, including navigation help or general questions!</li>
+                    </ul>
+                    <button id="CloseInstructionsBtn" class="btn btn-sm btn-danger mt-2">Close</button>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        </section>
+
+        <section id="SiriWave" class="mb-4" hidden>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                            <div class="class">
+                                <p class="text-start text-light mb-4 siri-message" ></p>
+                                <div id="siri-container"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </section>
+
+        <section id="BlackScreen" class="mb-4" hidden>
+            <div class="container text-center">
+                <div class="row justify-content-center align-items-center" style="height: 100vh;">
+                    <div class="col-md-10">
+                        <iframe id="mapFrame" width="100%" height="500px" frameborder="0" style="border:0"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+       
+    </div>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!---BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!--PARTICLE JS-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    <script src="script.js"></script>
+
+    <!--SIRI WAVE-->
+    <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
+
+    <!--TEXLLATE js-->
+    <script src="assets/vendore/texllate/jquery.fittext.js"></script>
+    <script src="assets/vendore/texllate/jquery.lettering.js"></script>
+    <script src="http://jschr.github.io/textillate/jquery.textillate.js"></script>
+
+    <script src="main.js"></script>
+    <script src="/controller.js"></script>
+    <script src="/eel.js"></script>
+</body>
+
+</html>

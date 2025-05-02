@@ -1,0 +1,8 @@
+{
+    "Activity Alert": "texting on phone",
+    "HOW Alert": "off_wheel",
+    "Fatigue Alert": "off",
+    "Health Alert": "off",
+    "Distraction Alert": "off",
+    "Sleep Alert": "false"
+}
