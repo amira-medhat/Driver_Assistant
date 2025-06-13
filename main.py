@@ -1,3 +1,12 @@
+import sys
+import traceback
+
+def catch_all_exceptions(exctype, value, tb):
+    print("💥 Uncaught exception:")
+    traceback.print_exception(exctype, value, tb)
+    input("\n[EXIT] Press Enter to close...")
+
+sys.excepthook = catch_all_exceptions
 import eel
 import webbrowser
 import threading
